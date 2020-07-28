@@ -1,0 +1,68 @@
+body {
+  background-color: #eeeeee;
+}
+.todolist {
+  background-color: #fff;
+  padding: 20px 20px 10px 20px;
+  margin-top: 30px;
+}
+.todolist h1 {
+  margin: 0;
+  padding-bottom: 20px;
+  text-align: center;
+}
+.form-control {
+  border-radius: 0;
+}
+li.ui-state-default {
+  background: #fff;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+li.ui-state-default:last-child {
+  border-bottom: none;
+}
+
+.todo-footer {
+  background-color: #f4fce8;
+  padding: 10px 20px;
+  margin: 10px 0;
+}
+#done-items li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+  text-decoration: line-through;
+}
+#done-items li:last-child {
+  border-bottom: none;
+}
+form {
+  width: 100%;
+  padding: 0 10px 0 0;
+}
+
+.split {
+  display: flex;
+  justify-content: space-between;
+}
+
+input.checkboxdone {
+  margin: 0 10px 0 0;
+}
+.todo-footer .count-todos {
+  padding: 0 6px 0 0;
+}
+h1 {
+  font-size: 1.9rem !important;
+}
+
+ul#done-items li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todolist p {
+  text-align: center;
+  font-size: 18px;
+}
