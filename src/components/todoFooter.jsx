@@ -1,14 +1,19 @@
 import React from "react";
+import { connect } from "react-redux";
 
-const TodoFooter = ({ count }) => {
+const TodoFooter = (props) => {
+  const todoCount = props.todos.length;
+
   return (
     <div className="todo-footer">
-      <strong>
-        <span className="count-todos">{count > 0 ? count : "No"}</span>
+      <strong style={{ paddingRight: "5px" }}>
+        {todoCount > 0 ? todoCount : "No "}{" "}
       </strong>
       Items Left
     </div>
   );
 };
-
-export default TodoFooter;
+function mapStateToProps(state) {
+  return state;
+}
+export default connect(mapStateToProps, null)(TodoFooter);

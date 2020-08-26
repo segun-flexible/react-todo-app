@@ -1,46 +1,52 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import "./fontawesome";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 
-const TodoDoneList = ({
-  todos,
-  handleRemoveDone,
-  handleRemoveAllDoneProps,
-  count,
-}) => {
+import "bootstrap/dist/css/bootstrap.css";
+
+import TodoDoneListView from "./todoDoneListViews";
+import { deleteDoneTodo } from "../actions/deleteDoneTodo";
+import { trashAllDone } from "../actions/trashAllDone";
+import { saveToStorage } from "../functions/saveToStorage";
+
+const TodoDoneList = (props) => {
+  const doneTodosCount = props.deletedTodos.length;
+  useEffect(() => {
+    saveToStorage("COMPLETED_TODOS", props.deletedTodos);
+  }, [props.deletedTodos]);
   return (
     <div className="todolist">
       <h1>Completed Todos</h1>
-      {count > 0 ? (
+
+      {doneTodosCount > 0 ? (
         <button
           className="btn btn-danger btn-sm mb-3"
-          onClick={handleRemoveAllDoneProps}
+          onClick={props.trashAllDone}
         >
           Trash All
         </button>
       ) : (
+        ""
+      )}
+
+      {doneTodosCount > 0 ? (
+        <ul id="done-items" className="list-unstyled">
+          {props.deletedTodos.map((todo) => (
+            <TodoDoneListView
+              todo={todo}
+              key={todo.id}
+              deleteTodo={props.deleteDoneTodo}
+            />
+          ))}
+        </ul>
+      ) : (
         <p>All Completed Todos Appears Here!</p>
       )}
-      <ul id="done-items" className="list-unstyled">
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            {todo.value}
-            <button
-              onClick={() => handleRemoveDone(todo.id)}
-              id={todo.id}
-              className="btn btn-default btn-xs pull-right  remove-item"
-            >
-              <FontAwesomeIcon
-                icon="trash"
-                onClick={() => handleRemoveDone(todo.id)}
-              />
-            </button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
-
-export default TodoDoneList;
+function mapStateToProps(state) {
+  return state;
+}
+export default connect(mapStateToProps, { deleteDoneTodo, trashAllDone })(
+  TodoDoneList
+);

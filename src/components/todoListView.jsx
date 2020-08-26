@@ -1,25 +1,19 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.css";
 
-const TodoListView = ({ todoProps, handleTickDone }) => {
+const TodoListView = ({ todo, deleteTodo }) => {
   return (
-    <>
-      <hr />
-      <ul id="sortable" className="list-unstyled ui-sortable">
-        <li className="ui-state-default">
-          <div className="checkbox">
-            <label>
-              <input
-                className="checkboxdone"
-                onChange={() => handleTickDone(todoProps.id)}
-                type="checkbox"
-              />
-              {todoProps.value}
-            </label>
-          </div>
-        </li>
-      </ul>
-    </>
+    <li className="ui-state-default">
+      <div className="checkbox">
+        <label>
+          <input
+            className="checkboxdone"
+            type="checkbox"
+            onChange={() => deleteTodo(todo.id)}
+          />
+          {todo.value}
+        </label>
+      </div>
+    </li>
   );
 };
 

@@ -17,6 +17,7 @@ body {
 li.ui-state-default {
   background: #fff;
   border: none;
+  list-style: none;
   border-bottom: 1px solid #ddd;
 }
 
@@ -65,4 +66,8 @@ ul#done-items li {
 .todolist p {
   text-align: center;
   font-size: 18px;
+}
+
+.form-control:focus {
+  border-color: #f4fce8 !important;
 }

@@ -1,44 +1,56 @@
-import React, { Component } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./fontawesome";
+import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-class TodoAddNew extends Component {
-  render() {
-    const { reference, handleSubmit, handleDeleteAllProps, count } = this.props;
-    return (
-      <>
-        <h1>Todos</h1>
+import EmptyAll from "./EmptyAll";
+import { addTodo } from "../actions/addTodo";
+import { saveToStorage } from "../functions/saveToStorage";
 
-        <div className="split">
-          <form onSubmit={handleSubmit}>
-            <input
-              ref={reference}
-              type="text"
-              className="form-control add-todo"
-              placeholder="What Are You Doing Today?"
-            />
-          </form>
-          <button
-            id="addNew"
-            onClick={handleSubmit}
-            className="btn btn-success"
-          >
-            <FontAwesomeIcon icon="check" />
-          </button>
-        </div>
+const TodoAddNew = (props) => {
+  const [inputTodo, setInputTodo] = useState("");
+  const inputRef = useRef();
+  useEffect(() => {
+    saveToStorage("UNCOMPLETED_TODOS", props.todos);
+  }, [props.todos]);
+  return (
+    <>
+      <h1>Todos</h1>
 
-        {count > 0 ? (
-          <button
-            className="btn btn-danger btn-sm mt-3"
-            onClick={handleDeleteAllProps}
-          >
-            Empty All
-          </button>
-        ) : (
-          ""
-        )}
-      </>
-    );
-  }
+      <div className="split">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            props.addTodo(inputTodo);
+            inputRef.current.value = "";
+            inputRef.current.focus();
+          }}
+        >
+          <input
+            ref={inputRef}
+            onChange={(e) => setInputTodo(e.target.value)}
+            type="text"
+            className="form-control add-todo"
+            placeholder="What Are You Doing Today?"
+          />
+        </form>
+        <button
+          id="addNew"
+          className="btn btn-success"
+          onClick={() => {
+            props.addTodo(inputTodo);
+            inputRef.current.value = "";
+            inputRef.current.focus();
+          }}
+        >
+          <FontAwesomeIcon icon="check" />
+        </button>
+      </div>
+
+      <EmptyAll />
+    </>
+  );
+};
+function mapStateToProps(state) {
+  return state;
 }
-
-export default TodoAddNew;
+export default connect(mapStateToProps, { addTodo })(TodoAddNew);
